@@ -1,5 +1,5 @@
 # Limbo
-[![Build Status](http://ci.loohpjames.com/job/Limbo/badge/icon)](http://ci.loohpjames.com/job/Limbo/)
+[![Build and publish](https://github.com/SVA-su/Games-Limbo/actions/workflows/build.yml/badge.svg?branch=translated)](https://github.com/SVA-su/Games-Limbo/actions/workflows/build.yml)
 ## Standalone Limbo Minecraft Server (Currently 1.21.1)
 
 ### Starting the server
