@@ -10,15 +10,6 @@ java -jar Limbo.jar --nogui
 
 Put the world scheme file in the same folder as the server jar file and configure the `server.properties` file to your needs 
 ***
-### Demo Limbo Server
-```
-IP: mc.loohpjames.com
-```
-![Server Banner](https://api.loohpjames.com/serverbanner.png?ip=mc.loohpjames.com&width=918&name=IP:%20mc.loohpjames.com)
-***
-### Downloads (1.17.1-1.21.1)
-- [Jenkins](http://ci.loohpjames.com/job/Limbo/)
-***
 ### Maven
 ```html
 <repository>
@@ -35,15 +26,3 @@ IP: mc.loohpjames.com
 </dependency>
 ```
 Replace `VERSION` with the version.
-
-## Partnerships
-
-### Server Hosting
-**Use the link or click the banner** below to **get a 25% discount off** your first month when buying any of their gaming servers!<br>
-It also **supports my development**, take it as an alternative way to donate while getting your very own Minecraft server as well!
-
-*P.S. Using the link or clicking the banner rather than the code supports me more! (Costs you no extra!)*
-
-**https://www.bisecthosting.com/loohp**
-
-![https://www.bisecthosting.com/loohp](https://www.bisecthosting.com/partners/custom-banners/fc7f7b10-8d1a-4478-a23a-8a357538a180.png)
