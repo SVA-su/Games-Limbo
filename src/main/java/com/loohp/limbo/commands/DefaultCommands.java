@@ -53,20 +53,22 @@ public class DefaultCommands implements CommandExecutor, TabCompletor {
 				if (args.length == 1 && sender instanceof Player) {
 					Player player = (Player) sender;
 					player.teleport(Limbo.getInstance().getServerProperties().getWorldSpawn());
-					player.sendMessage(Component.text(ChatColor.GOLD + "Тепортация..."));
+					// Используем Component.text для сообщений
+					player.sendMessage(Component.text("Тепортация...", TextColor.color(255, 215, 0))); // Цвет Gold
 				} else if (args.length == 2) {
 					Player player = Limbo.getInstance().getPlayer(args[1]);
 					if (player != null) {
 						player.teleport(Limbo.getInstance().getServerProperties().getWorldSpawn());
-						sender.sendMessage(ChatColor.GOLD + "Телепортируем " + player.getName() + " на спавн...");
+						sender.sendMessage(Component.text("Телепортируем ", TextColor.color(255, 215, 0))
+								.append(Component.text(player.getName() + " на спавн...", TextColor.color(255, 215, 0))));
 					} else {
-						sender.sendMessage(ChatColor.RED + "Игрок не найден!");
+						sender.sendMessage(Component.text("Игрок не найден!", TextColor.color(255, 0, 0))); // Цвет Red
 					}
 				} else {
-					sender.sendMessage(ChatColor.RED + "Неверное использование команды!");
+					sender.sendMessage(Component.text("Неверное использование команды!", TextColor.color(255, 0, 0))); // Цвет Red
 				}
 			} else {
-				sender.sendMessage(ChatColor.RED + "У вас нет прав на использование этой команды!");
+				sender.sendMessage(Component.text("У вас нет прав на использование этой команды!", TextColor.color(255, 0, 0))); // Цвет Red
 			}
 			return;
 		}
