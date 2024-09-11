@@ -24,10 +24,9 @@ import com.loohp.limbo.Limbo;
 import com.loohp.limbo.player.Player;
 import com.loohp.limbo.utils.GameMode;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.TextComponent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,30 +49,28 @@ public class DefaultCommands implements CommandExecutor, TabCompletor {
 			return;
 		}
 
-		if (args[0].equalsIgnoreCase("spawn")) {
-			if (sender.hasPermission("limboserver.spawn")) {
-				if (args.length == 1 && sender instanceof Player) {
-					Player player = (Player) sender;
-					player.teleport(Limbo.getInstance().getServerProperties().getWorldSpawn());
-					// Используем Component.text для сообщений
-					player.sendMessage(Component.text("Тепортация...", TextColor.color(255, 215, 0))); // Цвет Gold
-				} else if (args.length == 2) {
-					Player player = Limbo.getInstance().getPlayer(args[1]);
-					if (player != null) {
-						player.teleport(Limbo.getInstance().getServerProperties().getWorldSpawn());
-						sender.sendMessage(Component.text("Телепортируем ", TextColor.color(255, 215, 0))
-								.append(Component.text(player.getName() + " на спавн...", TextColor.color(255, 215, 0))));
-					} else {
-						sender.sendMessage(Component.text("Игрок не найден!", TextColor.color(255, 0, 0))); // Цвет Red
-					}
-				} else {
-					sender.sendMessage(Component.text("Неверное использование команды!", TextColor.color(255, 0, 0))); // Цвет Red
-				}
-			} else {
-				sender.sendMessage(Component.text("У вас нет прав на использование этой команды!", TextColor.color(255, 0, 0))); // Цвет Red
-			}
-			return;
-		}
+        if (args[0].equalsIgnoreCase("spawn")) {
+            if (sender.hasPermission("limboserver.spawn")) {
+                if (args.length == 1 && sender instanceof Player) {
+                    Player player = (Player) sender;
+                    player.teleport(Limbo.getInstance().getServerProperties().getWorldSpawn());
+                    player.sendMessage(new TextComponent(ChatColor.GOLD + "Тепортация..."));
+                } else if (args.length == 2) {
+                    Player player = Limbo.getInstance().getPlayer(args[1]);
+                    if (player != null) {
+                        player.teleport(Limbo.getInstance().getServerProperties().getWorldSpawn());
+                        sender.sendMessage(new TextComponent(ChatColor.GOLD + "Телепортируем " + player.getName() + " на спавн..."));
+                    } else {
+                        sender.sendMessage(new TextComponent(ChatColor.RED + "Игрок не найден!"));
+                    }
+                } else {
+                    sender.sendMessage(new TextComponent(ChatColor.RED + "Неверное использование команды!"));
+                }
+            } else {
+                sender.sendMessage(new TextComponent(ChatColor.RED + "У вас нет прав на использование этой команды!"));
+            }
+            return;
+        }
 		
 		if (args[0].equalsIgnoreCase("stop")) {
 			if (sender.hasPermission("limboserver.stop")) {
