@@ -26,7 +26,6 @@ import com.loohp.limbo.utils.GameMode;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.TextComponent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,41 +41,41 @@ public class DefaultCommands implements CommandExecutor, TabCompletor {
 
 		if (args[0].equalsIgnoreCase("version")) {
 			if (sender.hasPermission("limboserver.version")) {
-				sender.sendMessage(ChatColor.GRAY + "Этот сервер использует Limbo версии " + Limbo.getInstance().LIMBO_IMPLEMENTATION_VERSION + " (MC: " + Limbo.getInstance().SERVER_IMPLEMENTATION_VERSION + ")");
+				sender.sendMessage(ChatColor.GRAY + "This server is running Limbo version " + Limbo.getInstance().LIMBO_IMPLEMENTATION_VERSION + " (MC: " + Limbo.getInstance().SERVER_IMPLEMENTATION_VERSION + ")");
 			} else {
-				sender.sendMessage(ChatColor.RED + "У вас нет прав на использование этой команды!");
+				sender.sendMessage(ChatColor.RED + "You do not have permission to use that command!");
 			}
 			return;
 		}
 
-        if (args[0].equalsIgnoreCase("spawn")) {
-            if (sender.hasPermission("limboserver.spawn")) {
-                if (args.length == 1 && sender instanceof Player) {
-                    Player player = (Player) sender;
-                    player.teleport(Limbo.getInstance().getServerProperties().getWorldSpawn());
-                    player.sendMessage(new TextComponent(ChatColor.GOLD + "Тепортация..."));
-                } else if (args.length == 2) {
-                    Player player = Limbo.getInstance().getPlayer(args[1]);
-                    if (player != null) {
-                        player.teleport(Limbo.getInstance().getServerProperties().getWorldSpawn());
-                        sender.sendMessage(new TextComponent(ChatColor.GOLD + "Телепортируем " + player.getName() + " на спавн..."));
-                    } else {
-                        sender.sendMessage(new TextComponent(ChatColor.RED + "Игрок не найден!"));
-                    }
-                } else {
-                    sender.sendMessage(new TextComponent(ChatColor.RED + "Неверное использование команды!"));
-                }
-            } else {
-                sender.sendMessage(new TextComponent(ChatColor.RED + "У вас нет прав на использование этой команды!"));
-            }
-            return;
-        }
+		if (args[0].equalsIgnoreCase("spawn")) {
+			if (sender.hasPermission("limboserver.spawn")) {
+				if (args.length == 1 && sender instanceof Player) {
+					Player player = (Player) sender;
+					player.teleport(Limbo.getInstance().getServerProperties().getWorldSpawn());
+					// player.sendMessage(ChatColor.GOLD + "Teleporting you to spawn!");
+				} else if (args.length == 2) {
+					Player player = Limbo.getInstance().getPlayer(args[1]);
+					if (player != null) {
+						player.teleport(Limbo.getInstance().getServerProperties().getWorldSpawn());
+						sender.sendMessage(ChatColor.GOLD + "Teleporting " + player.getName() + " to spawn!");
+					} else {
+						sender.sendMessage(ChatColor.RED + "Player not found!");
+					}
+				} else {
+					sender.sendMessage(ChatColor.RED + "Invalid command usage!");
+				}
+			} else {
+				sender.sendMessage(ChatColor.RED + "You do not have permission to use that command!");
+			}
+			return;
+		}
 		
 		if (args[0].equalsIgnoreCase("stop")) {
 			if (sender.hasPermission("limboserver.stop")) {
 				Limbo.getInstance().stopServer();
 			} else {
-				sender.sendMessage(ChatColor.RED + "У вас нет прав на использование этой команды!");
+				sender.sendMessage(ChatColor.RED + "You do not have permission to use that command!");
 			}
 			return;
 		}
@@ -95,18 +94,18 @@ public class DefaultCommands implements CommandExecutor, TabCompletor {
 						}
 						player.disconnect(reason);
 						if (customReason) {
-							sender.sendMessage(ChatColor.RED + "Игрок " + player.getName() + " кикнут по причине: " + LegacyComponentSerializer.legacySection().serialize(reason));
+							sender.sendMessage(ChatColor.RED + "Kicked the player " + player.getName() + " for the reason: " + LegacyComponentSerializer.legacySection().serialize(reason));
 						} else {
-							sender.sendMessage(ChatColor.RED + "Игрок " + player.getName() + " кикнут");
+							sender.sendMessage(ChatColor.RED + "Kicked the player " + player.getName());
 						}
 					} else {
-						sender.sendMessage(ChatColor.RED + "Игрок не в сети!");
+						sender.sendMessage(ChatColor.RED + "Player is not online!");
 					}
 				} else {
-					sender.sendMessage(ChatColor.RED + "Вы не указали игрока!");
+					sender.sendMessage(ChatColor.RED + "You have to specifiy a player!");
 				}
 			} else {
-				sender.sendMessage(ChatColor.RED + "У вас нет прав на использование этой команды!");
+				sender.sendMessage(ChatColor.RED + "You do not have permission to use that command!");
 			}
 			return;
 		}
@@ -116,7 +115,7 @@ public class DefaultCommands implements CommandExecutor, TabCompletor {
 				if (args.length > 1) {
 					Player player = args.length > 2 ? Limbo.getInstance().getPlayer(args[2]) : (sender instanceof Player ? (Player) sender : null);
 					if (!(sender instanceof Player)) {
-						sender.sendMessage(ChatColor.RED + "Вы не указали игрока!");
+						sender.sendMessage(ChatColor.RED + "You have to specifiy a player!");
 					} else if (player != null) {
 						try {
 							player.setGamemode(GameMode.fromId(Integer.parseInt(args[1])));
@@ -124,19 +123,19 @@ public class DefaultCommands implements CommandExecutor, TabCompletor {
 							try {
 								player.setGamemode(GameMode.fromName(args[1]));
 							} catch (Exception e1) {
-								sender.sendMessage(ChatColor.RED + "Неверное использование команды!");
+								sender.sendMessage(ChatColor.RED + "Invalid usage!");
 								return;
 							}
 						}
-						sender.sendMessage(ChatColor.GOLD + "Игровой ржим обновлён для игрока " + player.getGamemode().getName());
+						sender.sendMessage(ChatColor.GOLD + "Updated gamemode to " + player.getGamemode().getName());
 					} else {
-						sender.sendMessage(ChatColor.RED + "Игрок не в сети!");
+						sender.sendMessage(ChatColor.RED + "Player is not online!");
 					}
 				} else {
-					sender.sendMessage(ChatColor.RED + "Неверное использование команды!");
+					sender.sendMessage(ChatColor.RED + "Invalid usage!");
 				}
 			} else {
-				sender.sendMessage(ChatColor.RED + "У вас нет прав на использование этой команды!");
+				sender.sendMessage(ChatColor.RED + "You do not have permission to use that command!");
 			}
 			return;
 		}
@@ -145,7 +144,7 @@ public class DefaultCommands implements CommandExecutor, TabCompletor {
 			if (sender.hasPermission("limboserver.say")) {
 				if (sender instanceof Console) {
 					if (args.length > 1) {
-						String message = "[Сервер] " + String.join(" ", Arrays.copyOfRange(args, 1, args.length));
+						String message = "[Server] " + String.join(" ", Arrays.copyOfRange(args, 1, args.length));
 						Limbo.getInstance().getConsole().sendMessage(message);
 						for (Player each : Limbo.getInstance().getPlayers()) {
 							each.sendMessage(message);
@@ -161,7 +160,7 @@ public class DefaultCommands implements CommandExecutor, TabCompletor {
 					}
 				}
 			} else {
-				sender.sendMessage(ChatColor.RED + "У вас нет прав на использование этой команды!");
+				sender.sendMessage(ChatColor.RED + "You do not have permission to use that command!");
 			}
 			return;
 		}
@@ -169,15 +168,15 @@ public class DefaultCommands implements CommandExecutor, TabCompletor {
 		if (args[0].equalsIgnoreCase("whitelist")) {
 			if (sender.hasPermission("limboserver.whitelist")) {
 				if (args.length != 2) {
-					sender.sendMessage(ChatColor.RED + "Неверное использование команды!");
+					sender.sendMessage(ChatColor.RED + "Invalid usage!");
 				} else if (!args[1].equalsIgnoreCase("reload")) {
-					sender.sendMessage(ChatColor.RED + "Неверное использование команды!");
+					sender.sendMessage(ChatColor.RED + "Invalid usage!");
 				} else {
 					Limbo.getInstance().getServerProperties().reloadWhitelist();
-					sender.sendMessage("Белый список был перезагружен");
+					sender.sendMessage("Whitelist has been reloaded");
 				}
 			} else {
-				sender.sendMessage(ChatColor.RED + "У вас нет прав на использование этой команды!");
+				sender.sendMessage(ChatColor.RED + "You do not have permission to use that command!");
 			}
 			return;
 		}
