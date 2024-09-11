@@ -24,6 +24,8 @@ import com.loohp.limbo.Limbo;
 import com.loohp.limbo.player.Player;
 import com.loohp.limbo.utils.GameMode;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.md_5.bungee.api.ChatColor;
 
