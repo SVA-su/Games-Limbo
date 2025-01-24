@@ -31,24 +31,37 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
-    - name: Find and Upload JAR
+    - name: Find and Upload JARs
       run: |
-        # Find the main JAR file (excluding sources and javadoc JARs)
-        JAR_FILE=$(find target -type f -name "*.jar" ! -name "*-sources.jar" ! -name "*-javadoc.jar" | head -n 1)
+        echo "Looking for JAR files..."
         
-        # Check if JAR file is found
-        if [ -z "$JAR_FILE" ]; then
-          echo "No JAR file found"
+        # Create the artifacts directory
+        mkdir -p artifacts
+        
+        # Find all JAR files except sources and javadoc
+        JAR_FILES=$(find target -type f -name "*.jar" ! -name "*-sources.jar" ! -name "*-javadoc.jar")
+        
+        # Check if any JAR files are found
+        if [ -z "$JAR_FILES" ]; then
+          echo "No JAR files found"
           exit 1
         fi
-        echo "JAR file found: $JAR_FILE"
         
-        # Upload JAR file as artifact
-        echo "Uploading artifact..."
-        mkdir -p artifacts
-        cp "$JAR_FILE" artifacts/
-      
-    - name: Upload Artifact
+        # Counter for unique file names
+        COUNTER=1
+        
+        # Loop through all JAR files
+        for JAR_FILE in $JAR_FILES; do
+          BASENAME=$(basename "$JAR_FILE")
+          RENAMED_FILE="artifacts/${BASENAME%.jar}-${COUNTER}.jar"
+          echo "Copying $JAR_FILE to $RENAMED_FILE"
+          cp "$JAR_FILE" "$RENAMED_FILE"
+          COUNTER=$((COUNTER + 1))
+        done
+        
+        echo "All files copied to artifacts folder."
+
+    - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
         name: Limbo-${{ env.VERSION }}-${{ github.run_number }}
