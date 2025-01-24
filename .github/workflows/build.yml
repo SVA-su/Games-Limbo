@@ -31,37 +31,26 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
-    - name: Find and Upload JARs
+    - name: Find and Upload Largest JAR
       run: |
-        echo "Looking for JAR files..."
+        echo "Looking for the largest JAR file..."
         
-        # Create the artifacts directory
-        mkdir -p artifacts
+        # Find all JAR files except sources and javadoc, sorted by size
+        JAR_FILE=$(find target -type f -name "*.jar" ! -name "*-sources.jar" ! -name "*-javadoc.jar" -exec ls -S {} + | head -n 1)
         
-        # Find all JAR files except sources and javadoc
-        JAR_FILES=$(find target -type f -name "*.jar" ! -name "*-sources.jar" ! -name "*-javadoc.jar")
-        
-        # Check if any JAR files are found
-        if [ -z "$JAR_FILES" ]; then
-          echo "No JAR files found"
+        # Check if a JAR file is found
+        if [ -z "$JAR_FILE" ]; then
+          echo "No JAR file found"
           exit 1
         fi
         
-        # Counter for unique file names
-        COUNTER=1
+        echo "Largest JAR file found: $JAR_FILE"
         
-        # Loop through all JAR files
-        for JAR_FILE in $JAR_FILES; do
-          BASENAME=$(basename "$JAR_FILE")
-          RENAMED_FILE="artifacts/${BASENAME%.jar}-${COUNTER}.jar"
-          echo "Copying $JAR_FILE to $RENAMED_FILE"
-          cp "$JAR_FILE" "$RENAMED_FILE"
-          COUNTER=$((COUNTER + 1))
-        done
-        
-        echo "All files copied to artifacts folder."
-
-    - name: Upload Artifacts
+        # Upload the largest JAR file
+        mkdir -p artifacts
+        cp "$JAR_FILE" artifacts/
+      
+    - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
         name: Limbo-${{ env.VERSION }}-${{ github.run_number }}
