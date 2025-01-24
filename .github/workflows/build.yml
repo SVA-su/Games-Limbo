@@ -34,14 +34,13 @@ jobs:
     - name: Find and Upload JAR
       run: |
         # Find the main JAR file (excluding sources and javadoc JARs)
-        JAR_FILE=$(find target -type f -name "*.jar" ! -name "*-sources.jar" ! -name "*-javadoc.jar")
+        JAR_FILE=$(find target -type f -name "*.jar" ! -name "*-sources.jar" ! -name "*-javadoc.jar" | head -n 1)
         
         # Check if JAR file is found
         if [ -z "$JAR_FILE" ]; then
           echo "No JAR file found"
           exit 1
         fi
-
         echo "JAR file found: $JAR_FILE"
         
         # Upload JAR file as artifact
