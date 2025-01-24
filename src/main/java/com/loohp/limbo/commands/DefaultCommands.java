@@ -53,7 +53,7 @@ public class DefaultCommands implements CommandExecutor, TabCompletor {
 				if (args.length == 1 && sender instanceof Player) {
 					Player player = (Player) sender;
 					player.teleport(Limbo.getInstance().getServerProperties().getWorldSpawn());
-					player.sendMessage(ChatColor.GOLD + "Teleporting you to spawn!");
+					// player.sendMessage(ChatColor.GOLD + "Teleporting you to spawn!");
 				} else if (args.length == 2) {
 					Player player = Limbo.getInstance().getPlayer(args[1]);
 					if (player != null) {

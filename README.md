@@ -1,5 +1,5 @@
 # Limbo
-[![Build Status](http://ci.loohpjames.com/job/Limbo/badge/icon)](http://ci.loohpjames.com/job/Limbo/)
+[![Build and publish](https://github.com/SVA-su/Games-Limbo/actions/workflows/build.yml/badge.svg?branch=translated)](https://github.com/SVA-su/Games-Limbo/actions/workflows/build.yml)
 ## Standalone Limbo Minecraft Server (Currently 1.21.4)
 
 ### Starting the server
@@ -39,15 +39,3 @@ IP: mc.loohpjames.com
 </dependency>
 ```
 Replace `VERSION` with the version.
-
-## Partnerships
-
-### Server Hosting
-**Use the link or click the banner** below to **get a 25% discount off** your first month when buying any of their gaming servers!<br>
-It also **supports my development**, take it as an alternative way to donate while getting your very own Minecraft server as well!
-
-*P.S. Using the link or clicking the banner rather than the code supports me more! (Costs you no extra!)*
-
-**https://www.bisecthosting.com/loohp**
-
-![https://www.bisecthosting.com/loohp](https://www.bisecthosting.com/partners/custom-banners/fc7f7b10-8d1a-4478-a23a-8a357538a180.png)
